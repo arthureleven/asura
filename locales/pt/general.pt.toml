@@ -1,0 +1,2 @@
+[Cooldown]
+warn="Você precisa esperar **{{.}} segundos** para usar este comando novamente."
