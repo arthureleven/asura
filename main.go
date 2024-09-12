@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "asura/commands"
+	"asura/database"
 	_ "asura/handler"
 	"fmt"
 	"log"
@@ -23,6 +24,10 @@ func main() {
 
 	s.AddHandler(OnReady)
 	s.AddHandler(OnInteractionCreate)
+
+	if err := database.Connect(); err != nil {
+		log.Fatalf("could not connect to database: %s", err)
+	}
 
 	if err := s.Start(); err != nil {
 		log.Fatalf("could not open session: %s", err)

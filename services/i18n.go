@@ -37,7 +37,7 @@ func T(id string, it *discordgo.InteractionCreate, data ...interface{}) string {
 }
 
 func init() {
-	Bundle = i18n.NewBundle(language.Portuguese)
+	Bundle = i18n.NewBundle(language.English)
 
 	Bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
 
