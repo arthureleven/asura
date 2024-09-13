@@ -29,6 +29,10 @@ func main() {
 		log.Fatalf("could not connect to database: %s", err)
 	}
 
+	if err := database.Init(); err != nil {
+		log.Fatalf("could not connect to redis: %s", err)
+	}
+
 	if err := s.Start(); err != nil {
 		log.Fatalf("could not open session: %s", err)
 	}

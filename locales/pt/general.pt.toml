@@ -1,2 +1,1 @@
-[Cooldown]
-warn="Você precisa esperar **{{.}} segundos** para usar este comando novamente."
+Cooldown="Você precisa esperar **{{.}} segundos** para usar este comando novamente."

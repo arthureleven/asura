@@ -2,8 +2,10 @@ package main
 
 import (
 	"asura/handler"
+	"asura/services"
 	"context"
 	"log"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -18,6 +20,20 @@ func OnInteractionCreate(s *discordgo.Session, it *discordgo.InteractionCreate) 
 	if command := handler.GetCommand(data.Name); command.Run != nil {
 		ctx := context.Background()
 
-		command.Run(ctx, s, it)
+		if cooldown, ok := handler.GetCooldown(ctx, it.Member.User.ID, command); ok {
+			since := int(time.Since(cooldown).Seconds())
+			rem := command.Cooldown - since
+
+			s.InteractionRespond(it.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Content: services.T("Cooldown", it, rem),
+				},
+			})
+		} else {
+			handler.SetCooldown(ctx, it.Member.User.ID, command)
+
+			command.Run(ctx, s, it)
+		}
 	}
 }
