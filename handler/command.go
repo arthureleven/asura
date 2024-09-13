@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -8,7 +10,7 @@ type Command struct {
 	Name        string
 	Description string
 	Options     []*discordgo.ApplicationCommandOption
-	Run         func(*discordgo.Session, *discordgo.InteractionCreate)
+	Run         func(context.Context, *discordgo.Session, *discordgo.InteractionCreate)
 	Developer   bool
 	Cooldown    int
 	Cache       []string

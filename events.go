@@ -2,6 +2,7 @@ package main
 
 import (
 	"asura/handler"
+	"context"
 	"log"
 
 	"github.com/bwmarrin/discordgo"
@@ -13,9 +14,10 @@ func OnReady(s *discordgo.Session, r *discordgo.Ready) {
 
 func OnInteractionCreate(s *discordgo.Session, it *discordgo.InteractionCreate) {
 	data := it.ApplicationCommandData()
-	command := handler.GetCommand(data.Name)
 
-	if command.Run != nil {
-		command.Run(s, it)
+	if command := handler.GetCommand(data.Name); command.Run != nil {
+		ctx := context.Background()
+
+		command.Run(ctx, s, it)
 	}
 }

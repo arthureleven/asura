@@ -1,6 +1,7 @@
 package database
 
 import (
+	"asura/adapters"
 	"database/sql"
 	"os"
 	"runtime"
@@ -12,6 +13,8 @@ import (
 )
 
 var Database *bun.DB
+
+var User adapters.UserAdapter
 
 func Connect() error {
 	config := pgdriver.NewConnector(
@@ -35,6 +38,10 @@ func Connect() error {
 	Database.SetMaxOpenConns(maxOpenConns)
 	Database.SetMaxIdleConns(maxOpenConns)
 	Database.AddQueryHook(bundebug.NewQueryHook())
+
+	User = adapters.UserAdapter{
+		DB: Database,
+	}
 
 	return nil
 }

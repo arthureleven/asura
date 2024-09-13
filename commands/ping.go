@@ -3,6 +3,7 @@ package commands
 import (
 	"asura/handler"
 	"asura/services"
+	"context"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -16,11 +17,11 @@ func init() {
 	})
 }
 
-func run(s *discordgo.Session, it *discordgo.InteractionCreate) {
+func run(_ context.Context, s *discordgo.Session, it *discordgo.InteractionCreate) {
 	s.InteractionRespond(it.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{
-			Content: services.T("Ping.pong", it),
+			Content: services.T("Ping", it),
 		},
 	})
 }
