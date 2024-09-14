@@ -3,6 +3,7 @@ package main
 import (
 	_ "asura/commands"
 	"asura/database"
+	"asura/game"
 	_ "asura/handler"
 	"fmt"
 	"log"
@@ -24,6 +25,8 @@ func main() {
 
 	s.AddHandler(OnReady)
 	s.AddHandler(OnInteractionCreate)
+
+	game.Init()
 
 	if err := database.Connect(); err != nil {
 		log.Fatalf("could not connect to database: %s", err)

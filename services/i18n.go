@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/BurntSushi/toml"
 	"github.com/bwmarrin/discordgo"
@@ -11,14 +12,9 @@ import (
 
 var Bundle *i18n.Bundle
 
-var Idioms = map[string]string{
+var Languages = map[string]string{
 	"pt-BR": "pt",
 	"en-US": "en",
-}
-
-var Paths = []string{
-	"general",
-	"commands",
 }
 
 func T(id string, it *discordgo.InteractionCreate, data ...interface{}) string {
@@ -41,9 +37,15 @@ func init() {
 
 	Bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
 
-	for _, lang := range Idioms {
-		for _, file := range Paths {
-			Bundle.MustLoadMessageFile(fmt.Sprintf("locales/%s/%s.%s.toml", lang, file, lang))
+	for _, language := range Languages {
+		basepath := fmt.Sprintf("locales/%s", language)
+
+		if files, err := os.ReadDir(basepath); err == nil {
+			for _, file := range files {
+				path := fmt.Sprintf("%s/%s", basepath, file.Name())
+
+				Bundle.MustLoadMessageFile(path)
+			}
 		}
 	}
 }

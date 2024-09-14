@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Normal",
+    "disadvantages": [],
+    "rarity": 0,
+    "moves": [
+      {
+        "name": "Peck",
+        "damage": [14, 23],
+        "required": 1
+      }
+    ],
+    "sprites": [
+      "https://iili.io/JGS1gHu.png",
+      "https://iili.io/JGSEP7n.png"
+    ]
+  }
+]

@@ -12,12 +12,12 @@ func init() {
 	handler.RegisterCommand(handler.Command{
 		Name:        "ping",
 		Description: "Pong!",
-		Run:         run,
+		Run:         runPing,
 		Cooldown:    3,
 	})
 }
 
-func run(_ context.Context, s *discordgo.Session, it *discordgo.InteractionCreate) {
+func runPing(_ context.Context, s *discordgo.Session, it *discordgo.InteractionCreate) {
 	s.InteractionRespond(it.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{
